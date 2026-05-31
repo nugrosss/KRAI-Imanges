@@ -14,6 +14,8 @@ prev_time = 0
 tinggi_box = 35
 focal_length = 800
 
+###firosjarak baru nih 
+
 
 
 if not cap.isOpened():
