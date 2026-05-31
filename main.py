@@ -3,9 +3,9 @@ from ultralytics import YOLO
 from grib import draw_grid_3x3,get_grid_cell,count_objects_in_grid
 import time
 
-
+# coba push
 model = YOLO(r"rak-v2\weights\best_int8_openvino_model", task="detect")
-
+# model = YOLO(r"rak-v2\weights\best_int8_openvino_model", task="detect")
 
 cap = cv2.VideoCapture(r"D:\kuliah JTD\belajar aroc\KRAI\frame_2.mp4")
 # cap = cv2.VideoCapture(1)
