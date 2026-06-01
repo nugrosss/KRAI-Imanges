@@ -13,6 +13,10 @@ cap = cv2.VideoCapture(r"D:\kuliah JTD\belajar aroc\KRAI\frame_2.mp4")
 prev_time = 0
 tinggi_box = 35
 focal_length = 800
+jarak_calibrasi= 20 #dalam cm 
+rak_grib = True
+
+###firosjarak baru nih 
 
 
 
@@ -37,6 +41,7 @@ while True:
 
     # Deteksi objek
     results = model(frame, imgsz=640, conf=0.25)
+    # results = model.track(frame, persist=True, tracker="botsort.yaml")  #jika ingin menggunkan id uncomen ini cak
     frame = results[0].plot()
 
     
@@ -59,6 +64,7 @@ while True:
                 cx = (x1 + x2) // 2
                 cy = (y1 + y2) // 2
                 distance = (focal_length * tinggi_box) / (y2 - y1)
+                distance = jarak_calibrasi - distance 
                 print(f"Jarak: {distance:.2f} cm")
 
                 kotak_list.append((cx, cy))
@@ -68,19 +74,22 @@ while True:
     prev_time = current_time
     cv2.putText(frame, f"FPS: {int(fps)}", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-    if bounding_box is not None:
-        bx1, by1, bx2, by2 = bounding_box
-        
-        
-        for cx, cy in kotak_list:
-            cell = get_grid_cell(cx, cy, bx1, by1, bx2, by2)
-            if cell is not None: # Pastikan cell valid
-                occupied_cells.append(cell)
 
-        grid_data = count_objects_in_grid(bounding_box,kotak_list)
-        print(grid_data)
-        
-        draw_grid_3x3(frame, bx1, by1, bx2, by2, occupied_cells)
+    if rak_grib == True:
+        cv2.putText(frame, "Rak Grib: ON", (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        if bounding_box is not None:
+            bx1, by1, bx2, by2 = bounding_box
+            
+            
+            for cx, cy in kotak_list:
+                cell = get_grid_cell(cx, cy, bx1, by1, bx2, by2)
+                if cell is not None: # Pastikan cell valid
+                    occupied_cells.append(cell)
+
+            grid_data = count_objects_in_grid(bounding_box,kotak_list)
+            print(grid_data)
+            
+            draw_grid_3x3(frame, bx1, by1, bx2, by2, occupied_cells)
 
             
    
