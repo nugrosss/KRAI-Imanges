@@ -14,9 +14,9 @@ prev_time = 0
 tinggi_box = 35
 focal_length = 800
 jarak_calibrasi= 20 #dalam cm 
-rak_grib = True
+rak_grib = False
 
-###firosjarak baru nih 
+
 
 
 
